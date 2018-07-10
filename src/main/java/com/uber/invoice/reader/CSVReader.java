@@ -13,7 +13,6 @@ import org.apache.commons.csv.CSVRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
-import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Component;
 
 import com.uber.invoice.domains.InvoiceItem;
@@ -24,8 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 @Slf4j
 public class CSVReader implements IReader<String, List<InvoiceItem>> {
-	@Autowired
-	private ResourceLoader resourceLoader;
+
 	@Value("${com.uber.invoice.cv.headers}")
 	private String csvHeader;
 

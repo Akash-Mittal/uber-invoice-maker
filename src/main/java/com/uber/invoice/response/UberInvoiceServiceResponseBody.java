@@ -7,7 +7,6 @@ import lombok.ToString;
 
 @Getter
 @Setter
-@SuppressWarnings("unused")
 @Builder
 @ToString
 public class UberInvoiceServiceResponseBody {
