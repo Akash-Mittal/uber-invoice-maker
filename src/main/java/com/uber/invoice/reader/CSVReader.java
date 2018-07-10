@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.apache.commons.csv.CSVFormat;
@@ -16,6 +17,7 @@ import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Component;
 
 import com.uber.invoice.domains.InvoiceItem;
+import com.uber.invoice.service.StorageService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -27,9 +29,18 @@ public class CSVReader implements IReader<String, List<InvoiceItem>> {
 	@Value("${com.uber.invoice.cv.headers}")
 	private String csvHeader;
 
+	private final StorageService storageService;
+
+	@Autowired
+	public CSVReader(StorageService storageService) {
+		this.storageService = storageService;
+	}
+
 	@Override
 	public List<InvoiceItem> read(String filePath) throws IOException {
-		Resource resource = resourceLoader.getResource(filePath);
+		// Resource resource = resourceLoader.getResource(filePath);
+		Resource resource = storageService.loadAsResource(filePath);
+
 		List<InvoiceItem> invoiceItemList = new ArrayList<>();
 		CSVParser csvParser = null;
 		try (Reader reader = new InputStreamReader(resource.getInputStream());) {
@@ -47,7 +58,8 @@ public class CSVReader implements IReader<String, List<InvoiceItem>> {
 			log.info("invoiceItemList size {}", invoiceItemList.size());
 
 		} finally {
-			// CSV Parser implements closeable dont know why editor is warning on this
+			// CSV Parser implements closeable dont know why editor is warning
+			// on this
 			if (csvParser != null)
 				csvParser.close();
 		}
@@ -60,7 +72,13 @@ public class CSVReader implements IReader<String, List<InvoiceItem>> {
 	}
 
 	private String[] getCSVHeader() {
-		String headers[] = csvHeader.split("|");
+		String headers[] = csvHeader.trim().split("\\|");
 		return headers;
+	}
+
+	public static void main(String[] args) {
+		Arrays.stream("fromAddress|toAddress|amount|dateTime|carType|driverName|invoiceFileName".split("|")).
+		forEach( temp -> {
+		System.out.println(temp);});
 	}
 }

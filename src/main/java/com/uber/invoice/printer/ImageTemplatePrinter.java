@@ -57,6 +57,7 @@ public class ImageTemplatePrinter implements IPrinter<String, List<InvoiceItem>,
 			uberTemplateImage.drawString(inoiceItem.getAmount(), 800, 1733);
 
 			uberTemplateImage.dispose();
+			
 			ImageIO.write(image, "png", new File(inoiceItem.getInvoiceFileName()));
 			numberOfInvoicesPrinted++;
 		}
