@@ -30,7 +30,8 @@ public class ImageTemplatePrinter implements IPrinter<String, List<InvoiceItem>,
     @Override
     public TemplatePrinterResponseBody print(String inputTemplate, List<InvoiceItem> inputData) throws IOException {
 
-        final BufferedImage image = ImageIO.read(resourceLoader.getResource("classpath:" + inputTemplate).getFile());
+        final BufferedImage image = ImageIO
+                .read(resourceLoader.getResource("classpath:" + inputTemplate).getInputStream());
         int numberOfInvoicesPrinted = 0;
         for (InvoiceItem inoiceItem : inputData) {
             Graphics uberTemplateImage = image.getGraphics();
