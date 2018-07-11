@@ -28,14 +28,12 @@ import com.uber.invoice.service.UberInvoiceService;
 
 import lombok.extern.slf4j.Slf4j;
 
-
-
 @Controller
 @Slf4j
 public class FileUploadController {
-	@Autowired
-	private UberInvoiceService uberInvoiceService;
-	
+    @Autowired
+    private UberInvoiceService uberInvoiceService;
+
     private final StorageService storageService;
 
     @Autowired
@@ -46,48 +44,44 @@ public class FileUploadController {
     @GetMapping("/")
     public String listUploadedFiles(Model model) throws IOException {
 
-        model.addAttribute("files", storageService.loadAll().map(
-                path -> MvcUriComponentsBuilder.fromMethodName(FileUploadController.class,
-                        "serveFile", path.getFileName().toString()).build().toString())
-                .collect(Collectors.toList()));
+        model.addAttribute("files",
+                storageService.loadAll()
+                        .map(path -> MvcUriComponentsBuilder
+                                .fromMethodName(FileUploadController.class, "serveFile", path.getFileName().toString())
+                                .build().toString())
+                        .collect(Collectors.toList()));
 
         return "uploadForm";
     }
 
-    @GetMapping("/dump/files/{filename:.+}")
-    @ResponseBody
-    public BaseResponse<UberInvoiceServiceResponseBody> serveFile(@PathVariable String filename) throws IOException {
-
-		log.info("Request Recieved for CSVFile {} ", filename);
-		UberInvoiceServiceResponseBody uberInvoiceServiceResponseBody = uberInvoiceService.getInvoices(filename,
-				"uber-template-V1.png");
-
-		BaseResponse<UberInvoiceServiceResponseBody> response = new BaseResponse<UberInvoiceServiceResponseBody>(
-				uberInvoiceServiceResponseBody, HttpStatus.OK);
-		log.info("Response {} ", response);
-
-		return response;
-       
-    }
-
-    
     @GetMapping("/files/{filename:.+}")
     @ResponseBody
-    public ResponseEntity<Resource>  serveFileSilently(@PathVariable String filename) throws IOException {
-    	 Resource file = storageService.loadAsResource(filename);
-         return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
-                 "attachment; filename=\"" + file.getFilename() + "\"").body(file);
+    public ResponseEntity<Resource> serveFile(@PathVariable String filename) throws IOException {
+        Resource file = storageService.loadAsResource(filename);
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"")
+                .body(file);
 
     }
 
-    
     @PostMapping("/")
-    public String handleFileUpload(@RequestParam("file") MultipartFile file,
-            RedirectAttributes redirectAttributes) {
+    public String handleFileUpload(@RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes)
+            throws IOException {
+        String fileExtension[] = file.getOriginalFilename().split("\\.");
+        if (fileExtension[fileExtension.length - 1].equalsIgnoreCase("csv")) {
+            storageService.store(file);
 
-        storageService.store(file);
-        redirectAttributes.addFlashAttribute("message",
-                "You successfully uploaded " + file.getOriginalFilename() + "!");
+            log.info("Request Recieved for CSVFile {} ", file.getOriginalFilename());
+            UberInvoiceServiceResponseBody uberInvoiceServiceResponseBody = uberInvoiceService
+                    .getInvoices(file.getOriginalFilename(), "uber-template-V1.png");
+
+            BaseResponse<UberInvoiceServiceResponseBody> response = new BaseResponse<UberInvoiceServiceResponseBody>(
+                    uberInvoiceServiceResponseBody, HttpStatus.OK);
+            log.info("Response {} ", response);
+
+            redirectAttributes.addFlashAttribute("message",
+                    "You successfully uploaded " + file.getOriginalFilename() + " " + response);
+        }
         return "redirect:/";
     }
 
