@@ -1,4 +1,4 @@
-package com.uber.invoice;
+package com.uber.invoice.controller;
 
 import java.io.IOException;
 import java.util.stream.Collectors;
