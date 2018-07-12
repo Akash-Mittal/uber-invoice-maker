@@ -17,3 +17,8 @@ Please see here for more.
  https://spring.io/guides/gs/uploading-files/
 #### CODE 
  https://github.com/spring-guides/gs-uploading-files.git
+ 
+ 
+ 
+ ### This code will run with lombok installed in the IDE
+  https://projectlombok.org/
