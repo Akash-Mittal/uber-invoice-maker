@@ -18,7 +18,10 @@ import com.uber.invoice.domains.InvoiceItem;
 import com.uber.invoice.response.TemplatePrinterResponseBody;
 import com.uber.invoice.service.FileSystemStorageService;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Component
+@Slf4j
 public class ImageTemplatePrinter implements IPrinter<String, List<InvoiceItem>, TemplatePrinterResponseBody> {
 
     @Autowired
@@ -33,47 +36,55 @@ public class ImageTemplatePrinter implements IPrinter<String, List<InvoiceItem>,
         final BufferedImage image = ImageIO
                 .read(resourceLoader.getResource("classpath:" + inputTemplate).getInputStream());
         int numberOfInvoicesPrinted = 0;
-        for (InvoiceItem inoiceItem : inputData) {
+        for (InvoiceItem invoiceItem : inputData) {
             Graphics uberTemplateImage = image.getGraphics();
             Font font = new Font("Calibri", Font.PLAIN, 48);
             uberTemplateImage.setFont(font);
             uberTemplateImage.setColor(Color.BLACK);
 
-            uberTemplateImage.drawString(inoiceItem.getDateTime(), 42, 312);
-            uberTemplateImage.drawString(inoiceItem.getAmount(), 800, 312);
+            uberTemplateImage.drawString(invoiceItem.getDateTime(), 42, 312);
+            uberTemplateImage.drawString(invoiceItem.getAmount(), 800, 312);
             font = new Font("Calibri Light", Font.PLAIN, 40);
             uberTemplateImage.setFont(font);
             uberTemplateImage.setColor(Color.GRAY);
 
-            uberTemplateImage.drawString(inoiceItem.getCarType(), 42, 395);
-            uberTemplateImage.drawString(inoiceItem.getFromAddress1(), 42, 530);
-            uberTemplateImage.drawString(inoiceItem.getFromAddress2(), 42, 587);
-            uberTemplateImage.drawString(inoiceItem.getToAddress1(), 42, 700);
-            uberTemplateImage.drawString(inoiceItem.getToAddress2(), 42, 757);
+            uberTemplateImage.drawString(invoiceItem.getCarType(), 42, 395);
+            uberTemplateImage.drawString(invoiceItem.getFromAddress1(), 42, 530);
+            uberTemplateImage.drawString(invoiceItem.getFromAddress2(), 42, 587);
+            uberTemplateImage.drawString(invoiceItem.getToAddress1(), 42, 700);
+            uberTemplateImage.drawString(invoiceItem.getToAddress2(), 42, 757);
 
             font = new Font("Calibri Light", Font.PLAIN, 52);
             uberTemplateImage.setFont(font);
             uberTemplateImage.setColor(Color.BLACK);
 
-            uberTemplateImage.drawString("    Your Ride With " + inoiceItem.getDriverName(), 130, 945);
+            uberTemplateImage.drawString("    Your Ride With " + invoiceItem.getDriverName(), 130, 945);
 
             uberTemplateImage.drawString("  uberGO Reciept", 43, 1311);
             uberTemplateImage.drawString("  Trip Fare", 43, 1433);
-            uberTemplateImage.drawString(inoiceItem.getAmount(), 800, 1433);
+            uberTemplateImage.drawString(invoiceItem.getAmount(), 800, 1433);
             uberTemplateImage.drawString("  Sub Total", 43, 1533);
-            uberTemplateImage.drawString(inoiceItem.getAmount(), 800, 1433);
+            uberTemplateImage.drawString(invoiceItem.getAmount(), 800, 1433);
             uberTemplateImage.drawString("  Total", 43, 1633);
-            uberTemplateImage.drawString(inoiceItem.getAmount(), 800, 1633);
+            uberTemplateImage.drawString(invoiceItem.getAmount(), 800, 1633);
             uberTemplateImage.drawString("     Cash   ", 43, 1733);
-            uberTemplateImage.drawString(inoiceItem.getAmount(), 800, 1733);
+            uberTemplateImage.drawString(invoiceItem.getAmount(), 800, 1733);
 
             uberTemplateImage.dispose();
 
             ImageIO.write(image, "png",
-                    new File(fileSystemStorageService.getRootLocation() + "/" + inoiceItem.getInvoiceFileName()));
+                    new File(fileSystemStorageService.getRootLocation() + "/" + getInvoiceFileName(invoiceItem)));
             numberOfInvoicesPrinted++;
         }
+
         return TemplatePrinterResponseBody.builder().numberOfInvoicesPrinted(numberOfInvoicesPrinted).build();
+    }
+
+    private String getInvoiceFileName(InvoiceItem invoiceItem) {
+        StringBuilder builder = new StringBuilder();
+        builder.append(invoiceItem.getDriverName()).append(".png");
+        return builder.toString();
+
     }
 
 }
