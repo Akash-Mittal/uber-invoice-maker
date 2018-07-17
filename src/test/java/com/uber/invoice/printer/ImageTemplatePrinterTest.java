@@ -34,7 +34,7 @@ public class ImageTemplatePrinterTest {
     @Before
     public void setUp() throws Exception {
         InvoiceItem invoiceItem = InvoiceItem.builder().carType("s").amount("s").dateTime("s").driverName("s")
-                .fromAddress("s").toAddress("s").invoiceFileName("invoice.png").build();
+                .fromAddress1("s").toAddress1("s").invoiceFileName("invoice.png").build();
         invoiceItems = new ArrayList<>();
         invoiceItems.add(invoiceItem);
         fileSystemStorageService.deleteAll();

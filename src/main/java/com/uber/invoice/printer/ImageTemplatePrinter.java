@@ -46,10 +46,10 @@ public class ImageTemplatePrinter implements IPrinter<String, List<InvoiceItem>,
             uberTemplateImage.setColor(Color.GRAY);
 
             uberTemplateImage.drawString(inoiceItem.getCarType(), 42, 395);
-            uberTemplateImage.drawString(inoiceItem.getFromAddress(), 42, 530);
-            uberTemplateImage.drawString(inoiceItem.getFromAddress(), 42, 587);
-            uberTemplateImage.drawString(inoiceItem.getToAddress(), 42, 700);
-            uberTemplateImage.drawString(inoiceItem.getToAddress(), 42, 757);
+            uberTemplateImage.drawString(inoiceItem.getFromAddress1(), 42, 530);
+            uberTemplateImage.drawString(inoiceItem.getFromAddress2(), 42, 587);
+            uberTemplateImage.drawString(inoiceItem.getToAddress1(), 42, 700);
+            uberTemplateImage.drawString(inoiceItem.getToAddress2(), 42, 757);
 
             font = new Font("Calibri Light", Font.PLAIN, 52);
             uberTemplateImage.setFont(font);

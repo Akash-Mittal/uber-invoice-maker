@@ -10,12 +10,14 @@ import lombok.ToString;
 @Builder
 @ToString
 public class InvoiceItem {
-	private String fromAddress;
-	private String toAddress;
-	private String amount;
-	private String dateTime;
-	private String carType;
-	private String driverName;
-	private String invoiceFileName;
+    private String fromAddress1;
+    private String fromAddress2;
+    private String toAddress1;
+    private String toAddress2;
+    private String amount;
+    private String dateTime;
+    private String carType;
+    private String driverName;
+    private String invoiceFileName;
 
 }
