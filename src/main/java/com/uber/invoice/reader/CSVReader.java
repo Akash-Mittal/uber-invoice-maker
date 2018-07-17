@@ -47,11 +47,10 @@ public class CSVReader implements IReader<String, List<InvoiceItem>> {
             String headers[] = getCSVHeader();
             for (CSVRecord csvRecord : csvParser) {
                 invoiceItemList.add(InvoiceItem.builder().fromAddress1(csvRecord.get(headers[0]))
-                        .fromAddress2(csvRecord.get(headers[0])).toAddress1(csvRecord.get(headers[1]))
-                        .amount(csvRecord.get(headers[2])).toAddress2(csvRecord.get(headers[1]))
-                        .amount(csvRecord.get(headers[2])).dateTime(csvRecord.get(headers[3]))
-                        .carType(csvRecord.get(headers[4])).driverName(csvRecord.get(headers[5]))
-                        .invoiceFileName(csvRecord.get(headers[6])).build());
+                        .fromAddress2(csvRecord.get(headers[1])).toAddress1(csvRecord.get(headers[2]))
+                        .toAddress2(csvRecord.get(headers[3])).amount(csvRecord.get(headers[4]))
+                        .dateTime(csvRecord.get(headers[5])).carType(csvRecord.get(headers[6]))
+                        .driverName(csvRecord.get(headers[7])).invoiceFileName(csvRecord.get(headers[8])).build());
 
             }
             ;
