@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.apache.commons.csv.CSVFormat;
@@ -75,10 +74,4 @@ public class CSVReader implements IReader<String, List<InvoiceItem>> {
         return headers;
     }
 
-    public static void main(String[] args) {
-        Arrays.stream("fromAddress|toAddress|amount|dateTime|carType|driverName|invoiceFileName".split("|"))
-                .forEach(temp -> {
-                    System.out.println(temp);
-                });
-    }
 }
