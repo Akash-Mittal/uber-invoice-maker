@@ -6,12 +6,12 @@ public interface IPrinter<I1, I2, O> {
 
     O print(I1 inputTemplate, I2 inputData) throws IOException;
 
-    enum FILEFORMAT {
-        PNG, JPEG, JPG, TIFF;
-    }
-
+    // Ideally FILE format should be in a different enum but
+    // to keep the pojo getter setter same they are in same enum
+    // when the API grows they can be refactored
     enum DELIMITERSNSTUFF {
-        SPACE(" "), TAB("    "), COLON(":"), PIPE("|"), CLASSPATH("classpath:");
+        SPACE(" "), TAB("    "), COLON(":"), PIPE("|"), DOT("."), CLASSPATH("classpath:"), PNG("png"), JPEG(
+                "jpeg"), JPG("jpg");
 
         private String val;
 
@@ -28,4 +28,5 @@ public interface IPrinter<I1, I2, O> {
         }
 
     }
+
 }

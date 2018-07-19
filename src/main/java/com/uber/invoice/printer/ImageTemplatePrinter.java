@@ -81,7 +81,7 @@ public class ImageTemplatePrinter implements IPrinter<String, List<InvoiceItem>,
                 uberTemplateImage.drawString(invoiceItem.getAmount(), 800, 1733);
 
                 String path = fileSystemStorageService.getRootLocation() + "/" + getInvoiceFileName(invoiceItem);
-                ImageIO.write(image, IPrinter.FILEFORMAT.PNG.name(), new File(path));
+                ImageIO.write(image, IPrinter.DELIMITERSNSTUFF.PNG.getVal(), new File(path));
                 uberTemplateImage.dispose();
                 log.info("Printed Image with Image Name {} ", path);
                 numberOfInvoicesPrinted++;
@@ -97,7 +97,8 @@ public class ImageTemplatePrinter implements IPrinter<String, List<InvoiceItem>,
 
     private String getInvoiceFileName(InvoiceItem invoiceItem) {
         StringBuilder builder = new StringBuilder();
-        builder.append(invoiceItem.getDriverName()).append(IPrinter.FILEFORMAT.PNG.name());
+        builder.append(invoiceItem.getDriverName()).append(IPrinter.DELIMITERSNSTUFF.DOT.getVal())
+                .append(IPrinter.DELIMITERSNSTUFF.PNG.getVal());
         return builder.toString();
 
     }
