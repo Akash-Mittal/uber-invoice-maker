@@ -35,7 +35,6 @@ public class CSVReader implements IReader<String, List<InvoiceItem>> {
 
     @Override
     public List<InvoiceItem> read(String filePath) throws IOException {
-        // Resource resource = resourceLoader.getResource(filePath);
         Resource resource = storageService.loadAsResource(filePath);
 
         List<InvoiceItem> invoiceItemList = new ArrayList<>();
