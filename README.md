@@ -12,7 +12,7 @@ https://github.com/Akash-Mittal/uber-invoice-maker/blob/master/src/test/resource
 * filename header in CSV is disabled - as it has some security complications.
 * Maximum File size is 128KB.
 * Sample Invoice.
-* ![alt text](https://drive.google.com/open?id=1rMJ3O3TNfuFWrgNWaf5GU3Iaa_rgjO7M)
+* ![aiport-hotel](https://user-images.githubusercontent.com/2044872/43359019-0f37c036-92b9-11e8-828b-e29882e09551.png)
 * APP URL https://uberinvoicemaker.herokuapp.com/
 
 
