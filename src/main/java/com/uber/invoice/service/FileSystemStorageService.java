@@ -17,7 +17,7 @@ import org.springframework.util.FileSystemUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.uber.invoice.exceptions.StorageException;
+import com.uber.invoice.exceptions.BaseException;
 import com.uber.invoice.exceptions.StorageFileNotFoundException;
 
 @Service
@@ -39,18 +39,18 @@ public class FileSystemStorageService implements StorageService {
         String filename = StringUtils.cleanPath(file.getOriginalFilename());
         try {
             if (file.isEmpty()) {
-                throw new StorageException("Failed to store empty file " + filename);
+                throw new BaseException("Failed to store empty file " + filename);
             }
             if (filename.contains("..")) {
                 // This is a security check
-                throw new StorageException(
+                throw new BaseException(
                         "Cannot store file with relative path outside current directory " + filename);
             }
             try (InputStream inputStream = file.getInputStream()) {
                 Files.copy(inputStream, this.rootLocation.resolve(filename), StandardCopyOption.REPLACE_EXISTING);
             }
         } catch (IOException e) {
-            throw new StorageException("Failed to store file " + filename, e);
+            throw new BaseException("Failed to store file " + filename, e);
         }
     }
 
@@ -60,7 +60,7 @@ public class FileSystemStorageService implements StorageService {
             return Files.walk(this.rootLocation, 1).filter(path -> !path.equals(this.rootLocation))
                     .map(this.rootLocation::relativize);
         } catch (IOException e) {
-            throw new StorageException("Failed to read stored files", e);
+            throw new BaseException("Failed to read stored files", e);
         }
 
     }
@@ -96,7 +96,7 @@ public class FileSystemStorageService implements StorageService {
         try {
             Files.createDirectories(rootLocation);
         } catch (IOException e) {
-            throw new StorageException("Could not initialize storage", e);
+            throw new BaseException("Could not initialize storage", e);
         }
     }
 }
