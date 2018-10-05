@@ -4,6 +4,15 @@ UBER Invoice Maker (For Education Purpose Only).
 Lets you create uber like invoice by uploading a CSV file(That contains raw data like
 from address ,to address and fare)
 
+### Technologies
+
+	* Java 8.
+	* MySQL and H2  
+	* Maven
+	* SLF4J
+	* Spring and Spring Boot.
+	* Thymeleaf
+
 ### Steps
 
 * Add details in a CSV given format (Please download it from 
