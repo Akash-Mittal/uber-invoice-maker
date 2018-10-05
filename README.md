@@ -1,17 +1,19 @@
 ## uber-invoice-maker
 UBER Invoice Maker (For Education Purpose Only).
 
-Lets you create uber like invoice by uploading a CSV file(That contains raw data like
-from address ,to address and fare)
+* Create uber like invoice by uploading a CSV file.
+* CSV contains raw data like`From Address`, ` To Address `, `Fare` driver and other details.
+* Uses batch processuing to generate the invoices.
 
 ### Technologies
 
-	* Java 8.
-	* MySQL and H2  
-	* Maven
-	* SLF4J
-	* Spring and Spring Boot.
-	* Thymeleaf
+* Java 8
+* MySQL and H2  
+* Maven
+* SLF4J
+* Spring and Spring Boot
+* Thymeleaf
+* Lombok
 
 ### Steps
 
@@ -32,15 +34,12 @@ https://uberinvoicemaker.herokuapp.com/
 
 
 File Upload Has Been Referenced from Springs gs-uploading-files project.
-Please see here for more.
 
 ##### Tutorial 
 
  https://spring.io/guides/gs/uploading-files/
- 
-##### CODE 
-
  https://github.com/spring-guides/gs-uploading-files.git
+ 
  
 ### To Remove the Compilation from IDE you need to install LAMBOK.
 
