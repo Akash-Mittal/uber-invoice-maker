@@ -31,14 +31,15 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 @Slf4j
 public class FileUploadController {
-    @Autowired
-    private UberInvoiceService uberInvoiceService;
+
+    private final UberInvoiceService uberInvoiceService;
 
     private final StorageService storageService;
 
     @Autowired
-    public FileUploadController(StorageService storageService) {
+    public FileUploadController(StorageService storageService, UberInvoiceService uberInvoiceService) {
         this.storageService = storageService;
+        this.uberInvoiceService = uberInvoiceService;
     }
 
     @GetMapping("/")
