@@ -5,6 +5,7 @@ UBER Invoice Maker (For Education Purpose Only).
 [![GitHub forks](https://img.shields.io/github/forks/Akash-Mittal/uber-invoice-maker.svg)](https://github.com/Akash-Mittal/uber-invoice-maker/network)
 [![GitHub license](https://img.shields.io/github/license/Akash-Mittal/uber-invoice-maker.svg)](https://github.com/Akash-Mittal/uber-invoice-maker/blob/master/LICENSE)
 [![GitHub stars](https://img.shields.io/github/stars/Akash-Mittal/uber-invoice-maker.svg)](https://github.com/Akash-Mittal/uber-invoice-maker/stargazers)
+[![Build Status](https://travis-ci.org/Akash-Mittal/uber-invoice-maker.svg?branch=master)](https://travis-ci.org/Akash-Mittal/uber-invoice-maker)
 
 
 
