@@ -2,6 +2,8 @@
 UBER Invoice Maker (For Education Purpose Only).
 
 [![GitHub issues](https://img.shields.io/github/issues/Akash-Mittal/uber-invoice-maker.svg)](https://github.com/Akash-Mittal/uber-invoice-maker/issues)
+[![GitHub forks](https://img.shields.io/github/forks/Akash-Mittal/uber-invoice-maker.svg)](https://github.com/Akash-Mittal/uber-invoice-maker/network)
+
 
 
 * Create uber like invoice by uploading a CSV file.
