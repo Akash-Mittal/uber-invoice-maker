@@ -24,7 +24,6 @@ public class UberInvoiceService {
 
 	public UberInvoiceServiceResponseBody getInvoices(String filePath, String inputTemplate) throws IOException {
 		log.info("Request Recieved ");
-
 		List<InvoiceItem> invoiceList = csvReader.read(filePath);
 		TemplatePrinterResponseBody templatePrinterResponseBody = imageTemplatePrinter.print(inputTemplate,
 				invoiceList);
