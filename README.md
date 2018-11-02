@@ -1,6 +1,9 @@
 ## uber-invoice-maker
 UBER Invoice Maker (For Education Purpose Only).
 
+[![GitHub issues](https://img.shields.io/github/issues/Akash-Mittal/uber-invoice-maker.svg)](https://github.com/Akash-Mittal/uber-invoice-maker/issues)
+
+
 * Create uber like invoice by uploading a CSV file.
 * CSV contains raw data like`From Address`, ` To Address `, `Fare` driver and other details.
 * Uses batch processuing to generate the invoices.
