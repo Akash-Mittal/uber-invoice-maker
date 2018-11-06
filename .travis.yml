@@ -1,7 +1,6 @@
 language: java
-
-jdk:
-  - oraclejdk9
-
+jdk: oraclejdk9
 sudo: required
+before_install:
+  - chmod +x mvnw
 
