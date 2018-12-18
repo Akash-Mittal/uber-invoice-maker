@@ -9,12 +9,12 @@ public class PrinterException extends BaseException {
 
     public PrinterException(String message, Throwable cause) {
         super(message, cause);
-        // TODO Auto-generated constructor stub
+        // 
     }
 
     public PrinterException(String message) {
         super(message);
-        // TODO Auto-generated constructor stub
+        // 
     }
 
 }
