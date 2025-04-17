@@ -41,6 +41,8 @@ https://github.com/Akash-Mittal/uber-invoice-maker/blob/master/src/test/resource
 
 https://uberinvoicemaker.herokuapp.com/
 
+optionally for local the url is http://localhost:9090/
+
 
 File Upload Has Been Referenced from Springs gs-uploading-files project.
 
