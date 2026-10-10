@@ -1,57 +1,71 @@
-## uber-invoice-maker
-UBER Invoice Maker (For Education Purpose Only).
+## Mock Receipt Maker
 
-[![GitHub issues](https://img.shields.io/github/issues/Akash-Mittal/uber-invoice-maker.svg)](https://github.com/Akash-Mittal/uber-invoice-maker/issues)
-[![GitHub forks](https://img.shields.io/github/forks/Akash-Mittal/uber-invoice-maker.svg)](https://github.com/Akash-Mittal/uber-invoice-maker/network)
-[![GitHub license](https://img.shields.io/github/license/Akash-Mittal/uber-invoice-maker.svg)](https://github.com/Akash-Mittal/uber-invoice-maker/blob/master/LICENSE)
-[![GitHub stars](https://img.shields.io/github/stars/Akash-Mittal/uber-invoice-maker.svg)](https://github.com/Akash-Mittal/uber-invoice-maker/stargazers)
-[![Build Status](https://travis-ci.org/Akash-Mittal/uber-invoice-maker.svg?branch=master)](https://travis-ci.org/Akash-Mittal/uber-invoice-maker)
+[![build](https://github.com/Akash-Mittal/uber-invoice-maker/actions/workflows/build.yml/badge.svg)](https://github.com/Akash-Mittal/uber-invoice-maker/actions/workflows/build.yml)
+[![GitHub license](https://img.shields.io/github/license/Akash-Mittal/uber-invoice-maker.svg)](LICENSE)
 
+A small Spring Boot learning project: upload a CSV of trips and get back one **unbranded, watermarked
+sample ride receipt** per row, handy for UI mock-ups, demos and test fixtures.
 
+> Every generated image is tiled with a `SAMPLE` watermark and carries a "Mock-up only, not a real
+> receipt, not valid for expenses" banner. The project deliberately doesn't imitate any real company's
+> receipts. Please don't use its output as proof of travel or for expense claims.
 
+<img src="docs/sample-receipt.png" alt="Example of a generated mock receipt" width="360">
 
-* Create uber like invoice by uploading a CSV file.
-* CSV contains raw data like`From Address`, ` To Address `, `Fare` driver and other details.
-* Uses batch processuing to generate the invoices.
+### Tech
 
-### Technologies
+* Java 21, Spring Boot 4.1 (Web MVC, Thymeleaf, Validation)
+* Apache Commons CSV 1.14
+* Java2D for rendering, with no external image template
+* JUnit 5, AssertJ and MockMvc for tests
+* GitHub Actions CI
 
-* Java 8
-* MySQL and H2  
-* Maven
-* SLF4J
-* Spring and Spring Boot
-* Thymeleaf
-* Lombok
+### Run it
 
-### Steps
+```bash
+./mvnw spring-boot:run        # Windows: mvnw.cmd spring-boot:run
+```
 
-* Add details in a CSV given format (Please download it from 
-https://github.com/Akash-Mittal/uber-invoice-maker/blob/master/src/test/resources/sample.csv).
-* Upload.
-* Click on the links to download the file(By default files will be created with driver name).
-* filename header in CSV is disabled - as it has some security complications.
-* Maximum File size is 128KB.
+Open <http://localhost:9090/>, choose a CSV and click **Generate receipts**. The generated PNGs are listed on
+the page and written to `generated-receipts/`, which is cleared of old `*.png` files at each startup.
 
-### Sample Invoice.
+Run the tests with `./mvnw verify`.
 
-* ![aiport-hotel](https://user-images.githubusercontent.com/2044872/43359019-0f37c036-92b9-11e8-828b-e29882e09551.png)
+### CSV format
 
-### APP URL
+The first row must be a header. Column names are case-insensitive, column order doesn't matter, and extra
+columns are ignored. See [`src/test/resources/sample.csv`](src/test/resources/sample.csv).
 
-https://uberinvoicemaker.herokuapp.com/
+| Column         | Example                  |
+|----------------|--------------------------|
+| `fromAddress1` | `12 Example Street`      |
+| `fromAddress2` | `Sampletown 100001`      |
+| `toAddress1`   | `Demo Central Station`   |
+| `toAddress2`   | `Sampletown 100002`      |
+| `amount`       | `1250.50` (or `1,250.50`)|
+| `dateTime`     | `01/07/2025 at 19:56`    |
+| `carType`      | `Hatchback`              |
+| `driverName`   | `Sam Placeholder`        |
 
-optionally for local the url is http://localhost:9090/
+### Configuration (`application.properties`)
 
+| Property                               | Default              | Meaning                              |
+|----------------------------------------|----------------------|--------------------------------------|
+| `app.output-dir`                       | `generated-receipts` | Where PNGs are written               |
+| `app.currency`                         | `INR`                | Currency code printed before amounts |
+| `app.max-rows`                         | `200`                | Max rows accepted per upload         |
+| `spring.servlet.multipart.max-file-size` | `128KB`            | Upload size limit                    |
 
-File Upload Has Been Referenced from Springs gs-uploading-files project.
+### Project layout
 
-##### Tutorial 
+```
+config/   ReceiptProperties   typed, validated app.* settings
+csv/      TripCsvParser       CSV -> Trip, with row-numbered error messages
+render/   ReceiptRenderer     Trip -> watermarked BufferedImage
+storage/  ReceiptStorage      server-generated file names, path-traversal-safe lookup
+service/  ReceiptService      parse -> render -> store
+web/      ReceiptController   upload form, list and download
+```
 
- https://spring.io/guides/gs/uploading-files/
- https://github.com/spring-guides/gs-uploading-files.git
- 
- 
-### To Remove the Compilation from IDE you need to install LAMBOK.
-
-  https://projectlombok.org/
+The upload flow was originally based on Spring's
+[Uploading Files](https://spring.io/guides/gs/uploading-files/) guide.
